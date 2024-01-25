@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# List of Git repositories
+repositories=(
+    "https://github.com/carlospolop/PEASS-ng"
+    "https://github.com/PowerShellMafia/PowerSploit"
+    # Add more repositories as needed
+)
+local_path="/opt/exploits/"
+
+# Function to update a Git repository
+update_repository() {
+    local repo_name=$(basename "$1")
+    local repo_path="$local_path/$repo_name"
+    
+    # Check if the directory exists
+    if [ -d "$repo_path" ]; then
+        # Change to the repository directory
+        cd "$repo_path" || exit
+        
+        # Perform git pull to update the repository
+        git pull
+        
+        # Print a separator for better output
+        echo "------------------------"
+    else
+         # Create the repository directory
+         mkdir "$repo_path"
+         cd "$repo_path" || exit
+         git clone "${repositories[@]}"
+    fi
+}
+
+# Iterate through repositories and update each one
+for repo in "${repositories[@]}"; do
+    update_repository "$repo"
+done
