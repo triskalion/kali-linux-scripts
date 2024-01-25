@@ -10,8 +10,7 @@ local_path="/opt/exploits/"
 
 # Function to update a Git repository
 update_repository() {
-    local repo_name=$(basename "$1")
-    local repo_path="$local_path/$repo_name"
+    local repo_path="$local_path/$(basename "$1")"
     
     # Check if the directory exists
     if [ -d "$repo_path" ]; then
