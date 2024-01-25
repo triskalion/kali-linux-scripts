@@ -27,7 +27,7 @@ update_repository() {
          # Create the repository directory
          mkdir "$repo_path"
          cd "$repo_path" || exit
-         git clone "${repositories[@]}"
+         git clone "$1"
     fi
 }
 
