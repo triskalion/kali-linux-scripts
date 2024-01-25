@@ -13,21 +13,19 @@ local_path="/opt/exploits/"
 update_repository() {
     local repo_path="$local_path/$(basename "$1")"
     
-    # Check if the directory exists
-    if [ -d "$repo_path" ]; then
-        # Change to the repository directory
-        cd "$repo_path" || exit
-        
-        # Perform git pull to update the repository
-        git pull
-        
+    # Check if the directory exists and is not empty
+    if [ -d "$repo_path" ] && [ -n "$(ls -A "$repo_path")" ]; then
+        # Directory exists and is not empty
+        echo "Directory '$repo_path' already exists and is not empty. Performing forced update."
+
+        # Fetch changes from the remote repository and reset to the remote branch
+        git -C "$repo_path" pull
+
         # Print a separator for better output
         echo "------------------------"
     else
-         # Create the repository directory
-         mkdir "$repo_path"
-         cd "$repo_path" || exit
-         git clone "$1"
+         # Clone the repository into the specified directory
+         git clone "$1" "$repo_path"
     fi
 }
 
