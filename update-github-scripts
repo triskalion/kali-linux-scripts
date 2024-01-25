@@ -4,6 +4,7 @@
 repositories=(
     "https://github.com/carlospolop/PEASS-ng"
     "https://github.com/PowerShellMafia/PowerSploit"
+    "https://github.com/unode/firefox_decrypt"
     # Add more repositories as needed
 )
 local_path="/opt/exploits/"
