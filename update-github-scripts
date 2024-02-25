@@ -11,7 +11,7 @@ postexploitation_repositories=(
 
 # OSINT
 OSINT_repositories=(
-    ""
+    "https://github.com/eslam3kl/GG-Dorking"
     # Add more repositories as needed
 )
 
