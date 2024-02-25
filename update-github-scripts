@@ -7,7 +7,9 @@ repositories=(
     "https://github.com/unode/firefox_decrypt"
     # Add more repositories as needed
 )
-local_path="/opt/exploits/"
+default_path="/opt"
+psotexploit_path="$default_path/postexploit/"
+osint_path="$default_path/OSINT/"
 
 # Function to update a Git repository
 update_repository() {
