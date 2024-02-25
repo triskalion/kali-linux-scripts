@@ -1,19 +1,48 @@
 #!/bin/bash
 
 # List of Git repositories
-repositories=(
+# PostExploitation
+postexploitation_repositories=(
     "https://github.com/carlospolop/PEASS-ng"
     "https://github.com/PowerShellMafia/PowerSploit"
     "https://github.com/unode/firefox_decrypt"
     # Add more repositories as needed
 )
+
+# OSINT
+OSINT_repositories=(
+    ""
+    # Add more repositories as needed
+)
+
 default_path="/opt"
-psotexploit_path="$default_path/postexploit/"
+postexploit_path="$default_path/postexploit/"
 osint_path="$default_path/OSINT/"
 
 # Function to update a Git repository
-update_repository() {
-    local repo_path="$local_path/$(basename "$1")"
+# PostExploitation
+update_postexploitation_repository() {
+    local repo_path="$postexploit_path/$(basename "$1")"
+    
+    # Check if the directory exists and is not empty
+    if [ -d "$repo_path" ] && [ -n "$(ls -A "$repo_path")" ]; then
+        # Directory exists and is not empty
+        echo "Directory '$repo_path' already exists and is not empty. Performing forced update."
+
+        # Fetch changes from the remote repository and reset to the remote branch
+        git -C "$repo_path" pull
+
+        # Print a separator for better output
+        echo "------------------------"
+    else
+         # Clone the repository into the specified directory
+         git clone "$1" "$repo_path"
+    fi
+}
+
+# OSINT
+update_OSINT_repository() {
+    local repo_path="$osint_path/$(basename "$1")"
     
     # Check if the directory exists and is not empty
     if [ -d "$repo_path" ] && [ -n "$(ls -A "$repo_path")" ]; then
@@ -32,6 +61,9 @@ update_repository() {
 }
 
 # Iterate through repositories and update each one
-for repo in "${repositories[@]}"; do
-    update_repository "$repo"
+for repo in "${postexploitation_repositories[@]}"; do
+    update_postexploitation_repository "$repo"
+done
+for repo in "${OSINT_repositories[@]}"; do
+    update_OSINT_repository "$repo"
 done
